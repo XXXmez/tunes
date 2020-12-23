@@ -48,23 +48,11 @@ export const radioPlayerInit = () => {
     });
 
     radioStop.addEventListener("click", () => {
-        let playPromise = audio.play();
-
-        if(playPromise != undefined){
-            playPromise.then(_ => {
-                audio.play();
-                console.log("play");
-            })
-            .catch(error => {
-                audio.pause();
-                console.log("pause");
-            })
-        }
-        /*if (audio.paused) {
+        if (audio.paused) {
             audio.play();
         } else {
             audio.pause();
-        }*/
+        }
         changeIconPlay();
     });
 
