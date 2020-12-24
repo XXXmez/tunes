@@ -7,6 +7,7 @@ export const radioPlayerInit = () => {
     const radioStop = document.querySelector(".radio-stop");
     const radioVolume = document.querySelector(".radio-volume");
     const radioPlayer = document.querySelector(".radio-player");
+    const playerBtn = document.querySelectorAll(".player-btn");
 
     const audio = new Audio();
     audio.type = "audio/acc";
@@ -64,4 +65,15 @@ export const radioPlayerInit = () => {
     radioPlayer.volume = 0.5;
 
     radioVolume.value = radioPlayer.volume * 100;
+
+    playerBtn.forEach((btn, i) => {
+        btn.addEventListener('click', () => {
+            if (radio.classList.contains("active")==false) {
+                audio.pause();
+                radio.classList.remove('play');
+                radioStop.classList.add("fa-play");
+                radioStop.classList.remove("fa-stop");
+            }
+        })
+    });  
 }
