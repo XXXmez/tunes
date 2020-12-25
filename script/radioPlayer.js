@@ -8,6 +8,7 @@ export const radioPlayerInit = () => {
     const radioVolume = document.querySelector(".radio-volume");
     const radioPlayer = document.querySelector(".radio-player");
     const playerBtn = document.querySelectorAll(".player-btn");
+    const volumeMute = document.querySelector(".volume-mute");
 
     const audio = new Audio();
     audio.type = "audio/acc";
@@ -58,13 +59,13 @@ export const radioPlayerInit = () => {
     });
 
     radioVolume.addEventListener("input", () => {
-        radioPlayer.volume = radioVolume.value / 100;
-        console.log(radioPlayer.volume);
+        audio.volume = radioVolume.value / 100;
+        console.log(audio.volume);
     });
 
-    radioPlayer.volume = 0.5;
+    audio.volume = 0.5;
 
-    radioVolume.value = radioPlayer.volume * 100;
+    radioVolume.value = audio.volume * 100;
 
     playerBtn.forEach((btn, i) => {
         btn.addEventListener('click', () => {
@@ -75,5 +76,15 @@ export const radioPlayerInit = () => {
                 radioStop.classList.remove("fa-stop");
             }
         })
-    });  
+    });
+    volumeMute.addEventListener("click", () => {
+        let currentSound;
+        if (audio.muted != true) {
+            radioVolume.value = 0;
+            audio.muted = true;
+        } else {
+            audio.muted = false;
+            radioVolume.value = audio.volume * 100;
+        }
+    });
 }
