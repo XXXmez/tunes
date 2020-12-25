@@ -12,3 +12,39 @@ html{-webkit-box-sizing:border-box;box-sizing:border-box}*,*::before,*::after{-w
 .video-progress, .video-volume, .audio-volume, .radio-volume {
     background: border-box;
 }
+.pause {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pause:before {
+    font-family: "fontAwesome";
+    content: "\f04b";
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    font-size: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff7d;
+    border-radius: 50%;
+    pointer-events: none;
+}
+.video-container {
+    display: flex;
+}
+.video-button:hover, .video-icon:hover {
+    color: #6ff;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #0f1e36 !important;
+    border-color: #0f1e36 !important;
+}
+@font-face {
+    font-family: fontAwesome;
+    src: url(../fonts/fa-regular-400.ttf);
+    font-style: normal; 
+    font-weight: normal; 
+}

@@ -1,18 +1,23 @@
 export const videoPlayerInit = () => {
-    const videoPlayer = document.querySelector(".video-player"),
-        videoButtonPlay = document.querySelector(".video-button__play"),
+    let videoPlayer = document.querySelector(".video-player"),
+        cardTitle = document.querySelectorAll(".card-title");
+    const videoButtonPlay = document.querySelector(".video-button__play"),
         videoButtonStop = document.querySelector(".video-button__stop"),
         videoTimePassed = document.querySelector(".video-time__passed"),
         videoProgress = document.querySelector(".video-progress"),
         videoTimeTotal = document.querySelector(".video-time__total"),
         videoFullScreen = document.querySelector(".video-full-screen"),
-        videoVolume = document.querySelector(".video-volume");
+        videoVolume = document.querySelector(".video-volume"),
+        videoNzt = document.querySelectorAll(".video-nzt"),
+        videoContainer = document.querySelector(".video-container");
 
     const toggleIcon = () => {
         if (videoPlayer.paused) {
+            videoContainer.classList.add("pause");
             videoButtonPlay.classList.remove("fa-pause");
             videoButtonPlay.classList.add("fa-play");
         } else {
+            videoContainer.classList.remove("pause");
             videoButtonPlay.classList.add("fa-pause");
             videoButtonPlay.classList.remove("fa-play");
         }
@@ -71,12 +76,41 @@ export const videoPlayerInit = () => {
         videoPlayer.requestFullscreen();
     });
 
+    videoPlayer.addEventListener("fullscreenchange", () => {
+        if (document.fullscreen) {
+            videoPlayer.controls = true;
+        } else {
+            videoPlayer.controls = false;
+        }
+    });
+
     videoVolume.addEventListener("input", () => {
         videoPlayer.volume = videoVolume.value / 100;
         console.log(videoPlayer.volume);
     });
 
     videoPlayer.volume = 0.5;
-
     videoVolume.value = videoPlayer.volume * 100;
+
+    videoNzt.forEach((item, i)=> {
+        item.addEventListener("click", (event) => {
+            let target = event.target;
+            let parrent = target.dataset.videoStatic;
+            let videoPlayerSrc = videoPlayer;
+            let cardImgTop = document.querySelectorAll(".card-img-top");
+            item.dataset.videoStatic = videoPlayerSrc.attributes[0].value;
+            videoPlayerSrc.attributes[0].value = parrent;
+            videoPlayer.play();
+
+            let imgVideo = videoPlayerSrc.poster;
+            let imgCard = cardImgTop[i].src;
+            videoPlayerSrc.poster  = imgCard;
+            cardImgTop[i].src = imgVideo;
+            
+            let nameVideo = videoPlayerSrc.dataset.videoName;
+            let nameCardvideo = cardTitle[i].innerHTML;
+            videoPlayerSrc.dataset.videoName = nameCardvideo;
+            cardTitle[i].innerHTML = nameVideo;
+        })
+    });
 }
