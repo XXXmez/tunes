@@ -42,8 +42,23 @@ html{-webkit-box-sizing:border-box;box-sizing:border-box}*,*::before,*::after{-w
     background-color: #0f1e36 !important;
     border-color: #0f1e36 !important;
 }
+
+.fa-volume:before {
+    content: "\f6a8";
+}
 .fa-volume-mute:before {
-    content: "\f6a9";
+    content: "\f2e2";
+}
+.volume-mute, .radio-icon  {
+    width: 20px;
+    height: 16px;
+}
+.none {
+    pointer-events: none;
+    color: #909090;
+}
+.footer-fix {
+    user-select: none;
 }
 
 

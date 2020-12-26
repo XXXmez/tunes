@@ -9,6 +9,7 @@ export const radioPlayerInit = () => {
     const radioPlayer = document.querySelector(".radio-player");
     const playerBtn = document.querySelectorAll(".player-btn");
     const volumeMute = document.querySelector(".volume-mute");
+    const currentVolume = document.querySelector(".current-volume");
 
     const audio = new Audio();
     audio.type = "audio/acc";
@@ -60,12 +61,52 @@ export const radioPlayerInit = () => {
 
     radioVolume.addEventListener("input", () => {
         audio.volume = radioVolume.value / 100;
-        console.log(audio.volume);
+        //console.log("a " +audio.volume);
+        console.log(radioVolume.value);
+        if (audio.volume > 0.70) {
+            currentVolume.classList.add("fa-volume-up");
+            currentVolume.classList.remove("fa-volume");
+        } else if (audio.volume > 0.40 ) {
+            currentVolume.classList.add("fa-volume");
+            currentVolume.classList.remove("fa-volume-down");
+            currentVolume.classList.remove("fa-volume-up");
+        } else if (audio.volume > 0.01 ) {
+            currentVolume.classList.add("fa-volume-down");
+            currentVolume.classList.remove("fa-volume-mute");
+            currentVolume.classList.remove("fa-volume");
+            volumeMute.classList.add("fa-volume-mute");
+            volumeMute.classList.remove("fa-volume-up");
+            volumeMute.classList.remove("none");
+        } else if (audio.volume < 0.01 && radioVolume.value < 10) {
+            currentVolume.classList.add("fa-volume-mute");
+            currentVolume.classList.remove("fa-volume-down");
+            volumeMute.classList.add("none");
+        }
     });
 
     audio.volume = 0.5;
 
     radioVolume.value = audio.volume * 100;
+
+    if (audio.volume > 0.70) {
+        currentVolume.classList.add("fa-volume-up");
+        currentVolume.classList.remove("fa-volume");
+    } else if (audio.volume > 0.40 ) {
+        currentVolume.classList.add("fa-volume");
+        currentVolume.classList.remove("fa-volume-down");
+        currentVolume.classList.remove("fa-volume-up");
+    } else if (audio.volume > 0.01 ) {
+        currentVolume.classList.add("fa-volume-down");
+        currentVolume.classList.remove("fa-volume-mute");
+        currentVolume.classList.remove("fa-volume");
+        volumeMute.classList.add("fa-volume-mute");
+        volumeMute.classList.remove("fa-volume-up");
+        volumeMute.classList.remove("none");
+    } else if (audio.volume < 0.01 && radioVolume.value < 10) {
+        currentVolume.classList.add("fa-volume-mute");
+        currentVolume.classList.remove("fa-volume-down");
+        volumeMute.classList.add("none");
+    }
 
     playerBtn.forEach((btn, i) => {
         btn.addEventListener('click', () => {
@@ -77,14 +118,28 @@ export const radioPlayerInit = () => {
             }
         })
     });
+    function volumeMutes (){
+        if (audio.volume < 0.01 && radioVolume.value < 10) {
+            
+        } else {
+            
+        }
+    };
+    volumeMutes();
     volumeMute.addEventListener("click", () => {
         let currentSound;
         if (audio.muted != true) {
             radioVolume.value = 0;
             audio.muted = true;
+            volumeMute.classList.remove("fa-volume-mute");
+            volumeMute.classList.add("fa-volume-up");
+            currentVolume.classList.add("fa-volume-mute");
         } else {
             audio.muted = false;
             radioVolume.value = audio.volume * 100;
+            volumeMute.classList.add("fa-volume-mute");
+            volumeMute.classList.remove("fa-volume-up");
+            currentVolume.classList.remove("fa-volume-mute");
         }
     });
 }
